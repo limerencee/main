@@ -103,6 +103,11 @@ public class MainWindow extends UiPart<Stage> {
         });
     }
 
+    void refreshList() {
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
     /**
      * Fills up all the placeholders of this window.
      */
@@ -130,6 +135,13 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
         }
+    }
+
+    /**
+     * Clears the Addressbook window.
+     */
+    public void handleClear() {
+        personListPanelPlaceholder.getChildren().clear();
     }
 
     /**
@@ -174,6 +186,11 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            refreshList();
+
+            if (commandResult.isClearScreen()) {
+                handleClear();
+            }
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
