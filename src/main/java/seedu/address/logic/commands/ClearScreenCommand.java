@@ -12,6 +12,6 @@ public class ClearScreenCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(MESSAGE_SUCCESS, true,false, false);
+        return new CommandResult(MESSAGE_SUCCESS, true, false, false);
     }
 }
